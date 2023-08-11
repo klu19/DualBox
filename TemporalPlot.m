@@ -28,7 +28,7 @@ faintblue = [blue, alpha];
 outcomeColors = containers.Map([0, 1], {faintred, faintgreen});
 
 %-Window size
-windowsize = 7000;
+windowsize = 10000;
 
 %-define line representing stimulus onset
 lineX = 1000;
@@ -40,12 +40,17 @@ context2 = [3,4,6];
 
 
 %USER 
-grouping = input('Enter grouping (1 = Standard, 2 = Repeat, 3 = Opp) : ');
-endtrial = input('Enter end trial (1 = Position, 2 = Feeder) : ');
+% grouping = input('Enter grouping (1 = Standard, 2 = Repeat, 3 = Opp) : ');
+% endtrial = input('Enter end trial (1 = Position, 2 = Feeder) : ');
+endtrial = 1;
+for grouping = 1
 
 names = containers.Map([1, 2, 3], {'Standard', 'Repeat', 'Opp'});
 
-figure('Name', names(grouping));
+fig_title = ['Temporal_', names(grouping)];
+figure('Name', fig_title);
+set(gcf, 'WindowState', 'maximized');
+
 %iterate through each session
 for session = 1:6    
     
@@ -232,7 +237,7 @@ for session = 1:6
     ylabel('Firing Rate (Hz)');
     title('Averaged Odor 1 PSTH');
     xlim([0, windowsize]);
-    ylim([0, 150]);
+    ylim([0, 250]);
     
     %group 2
     subplot(6, 6, 5 + (session - 1) * 6);
@@ -244,7 +249,7 @@ for session = 1:6
     ylabel('Firing Rate (Hz)');
     title('Averaged Odor 2 PSTH');
     xlim([0, windowsize]);
-    ylim([0, 150]);
+    ylim([0, 250]);
 
     %3.SMOOTHED LINE GRAPH FOR BOTH GROUPS
     subplot(6, 6, 6 + (session - 1) * 6);
@@ -261,7 +266,7 @@ for session = 1:6
     
     %set windows
     xlim([0, windowsize/100]);
-    ylim([0, 150]);
+    ylim([0, 250]);
 
     %label axis
     tickPositions = 20:20:70;
@@ -275,6 +280,14 @@ for session = 1:6
 
     legend('g1counts', 'g2counts');
     hold off
-
+    
+    
 end
 
+end
+% %save figure
+% subfolderName = 'Spatial_vs_Temporal';
+% savename = [fig_title, '.png'];
+% fullFilePath = fullfile(subfolderName, savename);
+% 
+% saveas(gcf, fullFilePath);
