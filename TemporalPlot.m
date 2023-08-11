@@ -9,7 +9,24 @@ clc;
 
 %LOAD FILES
 load('20230422.mat');
-load('spike.mat');
+
+%open subfolder
+subfolderName = '20230422AllSpikes';
+cd(fullfile(pwd, subfolderName));
+
+%filename = 'spike_cl-maze82_82.1.mat'; %cell 48 %odor 2 selective and increase firing for session 3 (context switch)
+%filename = 'spike_cl-maze50_50.5.mat'; %cell 43 %odor 1 selective and delayed suppresion between repeat and opp
+filename = 'spike_cl-maze222_222.9.mat'; %cell 36 %odor 2 swelecttive in context 2
+%filename = 'spike_cl-maze222_222.8.mat'; %cell 35 %odor stimulus selective in context 1 and odor 1 selective
+%filename = 'spike_cl-maze222_222.6.mat'; %cell 33 %odor stimulus selective in context1
+%filename = 'spike_cl-maze222_222.14.mat'; %cell 27 %odor 1 selectve in context 1
+%filename = 'spike_cl-maze222_222.11.mat'; %cell 24 %peak at 3000 drop at 4000
+%filename = 'spike_cl-maze20_20.6.mat'; %cell 19 %burst around 4000 (reward)?
+%filename = 'spike_cl-maze20_20.3.mat'; %cell 17 ?
+%filename = 'spike_cl-maze20_20.1.mat'; %cell 12 ?
+%filename = 'spike_cl-maze192_192.5.mat'; %cell 7 %odor 2 selective in context 1, odor 1 selective in context 2
+%filename = 'spike_cl-maze222_222.4.mat'; %cell 31  %odor 2 selective in context 2
+load(filename);
 
 %     filename = 'spike_cl-maze50_50.5.mat';
 %     folderpath  = '\Users\RBU-DevV2\Documents\MATLAB\DualBox\20230422_lec_spikes';
@@ -43,13 +60,14 @@ context2 = [3,4,6];
 % grouping = input('Enter grouping (1 = Standard, 2 = Repeat, 3 = Opp) : ');
 % endtrial = input('Enter end trial (1 = Position, 2 = Feeder) : ');
 endtrial = 1;
-for grouping = 1
+for grouping = 1:3
 
 names = containers.Map([1, 2, 3], {'Standard', 'Repeat', 'Opp'});
 
 fig_title = ['Temporal_', names(grouping)];
 figure('Name', fig_title);
 set(gcf, 'WindowState', 'maximized');
+
 
 %iterate through each session
 for session = 1:6    
