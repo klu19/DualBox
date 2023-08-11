@@ -115,24 +115,24 @@ for session = 1:6
 
     if grouping == 1
         %O1 vs O2
-        g1 = find(trialodor(:) == 1 & ~isnan(trialoutcomes(:)));
-        g2 = find(trialodor(:) == 2 & ~isnan(trialoutcomes(:)));
+        g1 = find(trialodor(:) == 1 & trialoutcomes(:) == 1);
+        g2 = find(trialodor(:) == 2 & trialoutcomes(:) == 1);
 
     elseif grouping == 2
         %Repeat
         pairwise_sums = trialodor(1:end-1) + trialodor(2:end);
         ind = [0; pairwise_sums];
         
-        g1 = find(ind == 2 & ~isnan(trialoutcomes(:)));
-        g2 = find(ind == 4 & ~isnan(trialoutcomes(:)));
+        g1 = find(ind == 2 & trialoutcomes(:) == 1);
+        g2 = find(ind == 4 & trialoutcomes(:) == 1);
     elseif grouping == 3
 
         %OPP
         odorpair = zeros(length(trialodor),2);
         odorpair(:,1) = trialodor;
         odorpair(2:end,2) = trialodor(1:end-1);
-        g1 = find(odorpair(:,1) == 1 & odorpair(:,2) == 2 & ~isnan(trialoutcomes(:)));
-        g2 = find(odorpair(:,1) == 2 & odorpair(:,2) == 1 & ~isnan(trialoutcomes(:)));
+        g1 = find(odorpair(:,1) == 1 & odorpair(:,2) == 2 & trialoutcomes(:) == 1);
+        g2 = find(odorpair(:,1) == 2 & odorpair(:,2) == 1 & trialoutcomes(:) == 1);
   
     end
 
