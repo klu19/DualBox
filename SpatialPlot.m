@@ -1,4 +1,4 @@
-%TemporalPlot
+%SpatialPlot
 %plots spiking as a func of time
 %input: bhv and spike data
 %output: raster plot and PSTH
@@ -38,12 +38,17 @@ context2 = [3,4,6];
 
 
 %USER 
-grouping = input('Enter grouping (1 = Standard, 2 = Repeat, 3 = Opp) : ');
-endtrial = input('Enter end trial (1 = Position, 2 = Feeder) : ');
+% grouping = input('Enter grouping (1 = Standard, 2 = Repeat, 3 = Opp) : ');
+% endtrial = input('Enter end trial (1 = Position, 2 = Feeder) : ');
+endtrial = 1;
+for grouping = 1
 
 names = containers.Map([1, 2, 3], {'Standard', 'Repeat', 'Opp'});
 
-figure('Name', names(grouping));
+fig_title = ['Spatial_', names(grouping)];
+figure('Name', fig_title);
+set(gcf, 'WindowState', 'maximized');
+
 %iterate through each session
 for session = 1:6    
     
@@ -108,7 +113,7 @@ for session = 1:6
     title('All trials');
     line([lineX, lineX], ylim, 'Color', lineColor, 'LineWidth', 1);
     yticks([]);
-    xlabel('Trial Elapsed Time (ms)');
+    xlabel('Y-Position (m)');
     hold off
 
     %GROUPS
@@ -221,34 +226,33 @@ for session = 1:6
     
     %define variables
     g1counts = histcounts(cat(1, g1spikes{:}), binedges);
-    g1rate = g1counts; %sum of each bin dividing by duration of each bin (100 ms = 0.1 seconds)
-
+    g1rate = g1counts; 
     %plot PSTH
     bar(binedges(1:end-1), g1rate, 'hist');
-    ylabel('Firing Rate (Hz)');
+    ylabel('Firing Rate');
     title('Averaged Odor 1 PSTH');
     xlim([0.5, 1]);
-    ylim([0 60]);
+    ylim([0 150]);
     
     %group 2
     subplot(6, 6, 5 + (session - 1) * 6);
     g2counts = histcounts(cat(1, g2spikes{:}), binedges);
-    g2rate = g2counts;
+    g2rate = g2counts; 
 
     %plot PSTH
     bar(binedges(1:end-1), g2rate, 'hist');
-    ylabel('Firing Rate (Hz)');
+    ylabel('Firing Rate');
     title('Averaged Odor 2 PSTH');
     xlim([0.5, 1]);
-    ylim([0 60]);
+    ylim([0 150]);
 
     %3.SMOOTHED LINE GRAPH FOR BOTH GROUPS
     subplot(6, 6, 6 + (session - 1) * 6);
     %Group 1
-    smoothedg1 = smooth(g1rate, 3); % Adjust the smoothing window size as desired
+    smoothedg1 = smooth(g1rate, .03); % Adjust the smoothing window size as desired
 
     %Group 2
-    smoothedg2 = smooth(g2rate, 3); % Adjust the smoothing window size as desired
+    smoothedg2 = smooth(g2rate, .03); % Adjust the smoothing window size as desired
 
     %plot line graphs
     plot(smoothedg1, 'b', 'LineWidth', 2);
@@ -260,17 +264,25 @@ for session = 1:6
     ylim([0, 150]);
 
     %label axis
-    tickPositions = 20:20:70;
-    tickLabels = 2000:2000:7000;
+    tickPositions = 0:10:50;
+    tickLabels = 0.5:0.1:1;
     xticks(tickPositions);
     xticklabels(tickLabels);
     xtickangle(0)
 
-    ylabel('Firing Rate (Hz)');
+    ylabel('Firing Rate');
     title('Smoothed Line Graph of Spike Histograms');
 
     legend('g1counts', 'g2counts');
     hold off
-
+    
+    
 end
 
+end
+% %save figure
+% subfolderName = 'Spatial_vs_Temporal';
+% savename = [fig_title, '.png'];
+% fullFilePath = fullfile(subfolderName, savename);
+% 
+% saveas(gcf, fullFilePath);
