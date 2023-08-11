@@ -2,6 +2,8 @@
 clear;
 clc;
 
+%Choose session
+sess = input('Enter Session #: ');
 
 %LIST OF CELLS TO ANALYZE
 cool = [7,12,17,19,24,27,31,33,35,43,48, 5,36];
@@ -33,7 +35,8 @@ filesDir = 'C:\Users\RBU-DevV2\Documents\MATLAB\DualBox\20230422AllSpikes\';
 spikefiles = dir([filesDir 'spike' '*cl*' '.mat']);
 
 %Define Figure
-figure('Name', 'Population_AllTRials');
+figtitle = ['Population_AllTrials Session #', num2str(sess)];
+figure('Name', figtitle);
 set(gcf, 'WindowState', 'maximized');
 
 %iterate through each cell
@@ -42,7 +45,7 @@ for numfile = 1:length(spikefiles)
     load(fullfile(filesDir,filename));
    
     %define variables
-    session = 3;
+    session = sess;
     num_trials = length(obj.Sessions.TrialPosition{session,1});
     spiketimes = cellfun(@str2double, dataTable.Timestamp{1,1}) / 1000; %convert cell array to int and convert from microseconds to miliseconds
     trialstart = obj.Sessions.TrialStart{session, 2} * 1000;  %convert from seconds to miliseconds
@@ -107,7 +110,7 @@ for numfile = 1:length(spikefiles)
     else
         title('All trials');
     end
-    
+
     %label raster plot
     line([lineX, lineX], ylim, 'Color', lineColor, 'LineWidth', 1);
     yticks([]);
