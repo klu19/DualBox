@@ -14,9 +14,10 @@ load('20230422.mat');
 subfolderName = '20230422AllSpikes';
 cd(fullfile(pwd, subfolderName));
 
+filename = 'spike_cl-maze192_192.3.mat'; %cell 5
 %filename = 'spike_cl-maze82_82.1.mat'; %cell 48 %odor 2 selective and increase firing for session 3 (context switch)
 %filename = 'spike_cl-maze50_50.5.mat'; %cell 43 %odor 1 selective and delayed suppresion between repeat and opp
-filename = 'spike_cl-maze222_222.9.mat'; %cell 36 %odor 2 swelecttive in context 2
+%filename = 'spike_cl-maze222_222.9.mat'; %cell 36 %odor 2 swelecttive in context 2
 %filename = 'spike_cl-maze222_222.8.mat'; %cell 35 %odor stimulus selective in context 1 and odor 1 selective
 %filename = 'spike_cl-maze222_222.6.mat'; %cell 33 %odor stimulus selective in context1
 %filename = 'spike_cl-maze222_222.14.mat'; %cell 27 %odor 1 selectve in context 1
